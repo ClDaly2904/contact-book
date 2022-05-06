@@ -27,18 +27,43 @@ def contacts_menu():
     print("\t\t\t\tCONTACT BOOK", flush=False)
     print("****************************************"
           "***************************************")
-    print("Welcome to your contacts book! "
-          "Please select a number from the options below:")
-    print("1. Add a new contact")
-    print("2. Remove an existing contact")
-    print("3. Delete all contacts")
-    print("4. Search for a contact")
-    print("5. Display all contacts")
-    print("6. Update existing contact")
-    print("7. Exit phonebook")
-    choice = int(input("Please enter your choice: "))
+    print("Welcome to your contacts book!")
+
+    while True:
+        print("Please select a number from the options below:")
+        print("1. Add a new contact")
+        print("2. Remove an existing contact")
+        print("3. Delete all contacts")
+        print("4. Search for a contact")
+        print("5. Display all contacts")
+        print("6. Update existing contact")
+        print("7. Exit phonebook")
+
+        choice = input("Please enter your choice: ")
+
+        if validate_choice(choice):
+            print("Selection accepted. Redirecting you now...")
+            break
 
     return choice
+
+
+def validate_choice(values):
+    """
+    Inside the try, check the user has only entered one character,
+    and that character is an integer
+    """
+    try:
+        [int(value) for value in values]
+        if len(values) > 1:
+            raise ValueError(
+                 f"Select 1 option from the list. You provided {len(values)}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
 
 
 def direct_user(choice):
