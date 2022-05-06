@@ -38,6 +38,29 @@ def contacts_menu():
     print("7. Exit phonebook")
     choice = int(input("Please enter your choice: "))
 
+    return choice
+
+
+def direct_user(choice):
+    """
+    Function to take user selection from menu
+    function and direct user to correct function
+    """
+    if choice == 1:
+        add_contact()
+    elif choice == 2:
+        remove_contact()
+    elif choice == 3:
+        delete_all()
+    elif choice == 4:
+        search_contact()
+    elif choice == 5:
+        display_all()
+    elif choice == 6:
+        update_contact()
+    elif choice == 7:
+        exit_phonebook()
+
 
 def main():
     """
