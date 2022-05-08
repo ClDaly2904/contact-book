@@ -71,8 +71,11 @@ def direct_user(choice):
     Function to take user selection from menu
     function and direct user to correct function
     """
-    if choice == 1:
+
+    if choice == '1':
         add_contact()
+
+        """
     elif choice == 2:
         remove_contact()
     elif choice == 3:
@@ -85,13 +88,42 @@ def direct_user(choice):
         update_contact()
     elif choice == 7:
         exit_phonebook()
+        """
+
+
+def add_contact():
+    """
+    Takes user input to create new contact information for name,
+    address, phone number and email address.
+    """
+    new_contact = []
+
+    print("****************************************"
+          "***************************************")
+    print("You have selected to add a new contact.")
+    print("Please enter the following details:")
+
+    contact_name = input("Please enter contact name:")
+    contact_address = input("Please enter contact address including postcode:")
+    contact_number = input("Please enter contact number:")
+    contact_email = input("Please enter contact email address:")
+
+    new_contact.append(contact_name)
+    new_contact.append(contact_address)
+    new_contact.append(contact_number)
+    new_contact.append(contact_email)
+
+    contacts.append_row(new_contact)
+
+    print("Contact added successfully.\n")
 
 
 def main():
     """
     Program to run all functions
     """
-    contacts_menu()
+    choice = contacts_menu()
+    direct_user(choice)
 
 
 main()
