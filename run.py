@@ -54,11 +54,13 @@ def validate_choice(values):
     and that character is an integer
     """
     try:
+        # Checks user has input only one value, else throws error
         [int(value) for value in values]
         if len(values) > 1:
             raise ValueError(
                  f"Select 1 option from the list. You provided {len(values)}"
             )
+    # Throws error if user has not entered a number
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
@@ -103,19 +105,50 @@ def add_contact():
     print("You have selected to add a new contact.")
     print("Please enter the following details:")
 
-    contact_name = input("Please enter contact name:")
+    while True:
+        # Assigns variable for first name to user input, converts to lowercase
+        contact_fname = input("Please enter first name for contact:").lower()
+
+        if validate_name(contact_fname):
+            new_contact.append(contact_fname)
+            break
+
+    while True:
+        # Assigns variable for last name to user input, converts to lowercase
+        contact_lname = input("Please enter last name for contact:").lower()
+
+        if validate_name(contact_lname):
+            new_contact.append(contact_lname)
+            break
+
     contact_address = input("Please enter contact address including postcode:")
     contact_number = input("Please enter contact number:")
     contact_email = input("Please enter contact email address:")
 
-    new_contact.append(contact_name)
     new_contact.append(contact_address)
     new_contact.append(contact_number)
     new_contact.append(contact_email)
-
     contacts.append_row(new_contact)
 
+    # Provides feedback to user that they have been successful
     print("Contact added successfully.\n")
+
+
+def validate_name(name):
+    """
+    Checks user input to make sure that user has
+    not used any numbers or special characters
+    """
+
+    # Adding valid characters variable for validation rather than using
+    # .isalpha() as some names may contain blank spaces or hyphens
+    valid_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -'
+
+    if not all(char in valid_characters for char in name):
+        print("Invalid data. Allowed characters are alphabet, hyphen or space")
+        return False
+    else:
+        return True
 
 
 def main():
