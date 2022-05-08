@@ -29,6 +29,7 @@ def contacts_menu():
           "***************************************")
     print("Welcome to your contacts book!")
 
+    # Loop repeats until user makes a valid number selection
     while True:
         print("Please select a number from the options below:")
         print("1. Add a new contact")
@@ -55,11 +56,12 @@ def validate_choice(values):
     """
     try:
         # Checks user has input only one value, else throws error
-        [int(value) for value in values]
-        if len(values) > 1:
+        num = [int(value) for value in values]
+        if len(num) > 1:
             raise ValueError(
-                 f"Select 1 option from the list. You provided {len(values)}"
+                 f"Select 1 option from the list. You provided {len(num)}"
             )
+
     # Throws error if user has not entered a number
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
@@ -122,12 +124,20 @@ def add_contact():
             break
 
     contact_address = input("Please enter contact address including postcode:")
-    contact_number = input("Please enter contact number:")
+
+    while True:
+        contact_number = input("Please enter contact number:")
+
+        if validate_number(contact_number):
+            new_contact.append(contact_number)
+            break
+
     contact_email = input("Please enter contact email address:")
 
     new_contact.append(contact_address)
-    new_contact.append(contact_number)
     new_contact.append(contact_email)
+
+    # Adds new row to contacts sheet if all data is valid
     contacts.append_row(new_contact)
 
     # Provides feedback to user that they have been successful
@@ -149,6 +159,32 @@ def validate_name(name):
         return False
     else:
         return True
+
+
+def validate_number(values):
+    """
+    Inside the try, converts all string values into integers.
+    Raises ValueError if strings cannot be converted into int,
+    or if there aren't exactly 6 values.
+    """
+
+    try:
+        num = [int(value) for value in values]
+        # Check to see if length of numbers user has entered is 10,
+        # if not, then checks to see if length is 11
+        if len(num) != 10:
+            if len(num) != 11:
+                # Throws error if user input is not required length
+                raise ValueError(
+                    "Minimum value required is 10, maximum 11."
+                    f"You provided {len(num)}"
+                )
+    # Throws error if user has not entered a number
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
 
 
 def main():
