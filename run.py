@@ -124,6 +124,7 @@ def add_contact():
             break
 
     contact_address = input("Please enter contact address including postcode:")
+    new_contact.append(contact_address)
 
     while True:
         contact_number = input("Please enter contact number:")
@@ -132,10 +133,13 @@ def add_contact():
             new_contact.append(contact_number)
             break
 
-    contact_email = input("Please enter contact email address:")
+    while True:
+        # Assigns variable for email to user input, converts to lowercase
+        contact_email = input("Please enter contact email address:").lower()
 
-    new_contact.append(contact_address)
-    new_contact.append(contact_email)
+        if validate_email(contact_email):
+            new_contact.append(contact_email)
+            break
 
     # Adds new row to contacts sheet if all data is valid
     contacts.append_row(new_contact)
@@ -182,6 +186,32 @@ def validate_number(values):
     # Throws error if user has not entered a number
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
+
+
+def validate_email(email):
+    """
+    Inside the try, check to see if the email contains
+    necessary characters '@' and '.'.
+    Raises ValueError if user has not input email characters
+    """
+
+    try:
+        if "@" not in email:
+            raise ValueError(
+                "Email address requires @ and ."
+            )
+        elif "." not in email:
+            raise ValueError(
+                "Email address requires @ and ."
+            )
+    except ValueError:
+        # Provide error message to user with example of correct format
+        print("Invalid data, email must contain '@' and '.'"
+              ". Please try again.")
+        print("Example: contact@email.com")
         return False
 
     return True
