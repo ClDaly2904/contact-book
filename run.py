@@ -22,12 +22,9 @@ def contacts_menu():
     Menu to initialize when program first runs. User can view all
     the different contact options and make a selection.
     """
+
     print("****************************************"
           "***************************************")
-    print("\t\t\t\tCONTACT BOOK", flush=False)
-    print("****************************************"
-          "***************************************")
-    print("Welcome to your contacts book!")
 
     # Loop repeats until user makes a valid number selection
     while True:
@@ -40,10 +37,10 @@ def contacts_menu():
         print("6. Update existing contact")
         print("7. Exit phonebook")
 
-        choice = input("Please enter your choice: ")
+        choice = input("Please enter your choice: \n")
 
         if validate_choice(choice):
-            print("Selection accepted. Redirecting you now...")
+            print("Selection accepted. Redirecting you now...\n")
             break
 
     return choice
@@ -59,7 +56,7 @@ def validate_choice(values):
         num = [int(value) for value in values]
         if len(num) > 1:
             raise ValueError(
-                 f"Select 1 option from the list. You provided {len(num)}"
+                 f"Select 1 option from the list. You provided {len(num)}\n"
             )
 
     # Throws error if user has not entered a number
@@ -80,16 +77,16 @@ def direct_user(choice):
         add_contact()
     elif choice == '2':
         remove_contact()
-        """
-    elif choice == 3:
+    elif choice == '3':
         delete_all()
-    elif choice == 4:
+        """
+    elif choice == '4':
         search_contact()
-    elif choice == 5:
+    elif choice == '5':
         display_all()
-    elif choice == 6:
+    elif choice == '6':
         update_contact()
-    elif choice == 7:
+    elif choice == '7':
         exit_phonebook()
         """
 
@@ -103,12 +100,13 @@ def add_contact():
 
     print("****************************************"
           "***************************************")
-    print("You have selected to add a new contact.")
+    print("You have selected to add a new contact.\n")
     print("Please enter the following details:")
 
     while True:
         # Assigns variable for first name to user input, converts to lowercase
-        contact_fname = input("Please enter first name for contact:").lower()
+        contact_fname = input("Please enter first name for contact:"
+                              " \n").lower()
 
         if validate_name(contact_fname):
             new_contact.append(contact_fname)
@@ -116,17 +114,18 @@ def add_contact():
 
     while True:
         # Assigns variable for last name to user input, converts to lowercase
-        contact_lname = input("Please enter last name for contact:").lower()
+        contact_lname = input("Please enter last name for contact: \n").lower()
 
         if validate_name(contact_lname):
             new_contact.append(contact_lname)
             break
 
-    contact_address = input("Please enter contact address including postcode:")
+    contact_address = input("Please enter contact address including postcode: "
+                            "\n")
     new_contact.append(contact_address)
 
     while True:
-        contact_number = input("Please enter contact number:")
+        contact_number = input("Please enter contact number: \n")
 
         if validate_number(contact_number):
             new_contact.append(contact_number)
@@ -134,7 +133,7 @@ def add_contact():
 
     while True:
         # Assigns variable for email to user input, converts to lowercase
-        contact_email = input("Please enter contact email address:").lower()
+        contact_email = input("Please enter contact email address: \n").lower()
 
         if validate_email(contact_email):
             new_contact.append(contact_email)
@@ -145,6 +144,8 @@ def add_contact():
 
     # Provides feedback to user that they have been successful
     print("Contact added successfully.\n")
+    # Return user back to menu
+    main()
 
 
 def validate_name(name):
@@ -158,7 +159,8 @@ def validate_name(name):
     valid_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -'
 
     if not all(char in valid_characters for char in name):
-        print("Invalid data. Allowed characters are alphabet, hyphen or space")
+        print("Invalid data. Allowed characters are alphabet, hyphen or space."
+              "\n")
         return False
     else:
         return True
@@ -210,7 +212,7 @@ def validate_email(email):
         # Provide error message to user with example of correct format
         print("Invalid data, email must contain '@' and '.'"
               ". Please try again.")
-        print("Example: contact@email.com")
+        print("Example: contact@email.com\n")
         return False
 
     return True
@@ -225,12 +227,12 @@ def remove_contact():
     print("****************************************"
           "***************************************")
     # Confirm to user which function they have selected
-    print("You have selected to delete a contact.")
+    print("You have selected to delete a contact.\n")
 
     while True:
 
         search_term = input("Please input the first name or last name of"
-                            " contact:")
+                            " contact: \n")
 
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
@@ -239,8 +241,11 @@ def remove_contact():
                 contact_to_delete = search_workbook(search_term).row
                 contacts.delete_rows(contact_to_delete)
                 # Confirm deletion to the user
-                print("Contact successfully deleted.")
+                print("Contact successfully deleted.\n")
                 break
+
+    # Return user back to menu
+    main()
 
 
 def search_workbook(term):
@@ -249,16 +254,80 @@ def search_workbook(term):
     otherwise throws warning
     """
 
-    print(f"Searching contacts list for '{term}'")
+    print(f"Searching contacts list for '{term}'\n")
 
     find_contact = contacts.find(term)
 
     if find_contact:
-        print(f"{term} found!")
+        # Confirm to user contact has been found
+        print(f"{term} found!\n")
         return find_contact
     else:
         print(f"Contact '{term}' not found."
-              " Please try again.")
+              " Please try again.\n")
+
+
+def delete_all():
+    """
+    Deletes all values in contact book
+    """
+
+    print("****************************************"
+          "***************************************")
+
+    headings = ["first name", "last name", "address", "phone number",
+                "email"]
+
+    while True:
+        print("You have selected to delete all contacts.\n")
+        # Warn user they are about to clear all contacts
+        print("Are you sure you want to proceed?")
+
+        # Assigns variable for confirmation input, converts to lowercase
+        # Make user confirm they wish to delete all contacts
+        confirm_delete = input("Press 'Y' to delete all contacts"
+                               " or 'N' to cancel and return to menu: "
+                               "\n").lower()
+
+        if validate_delete(confirm_delete):
+            if confirm_delete == "y":
+                # Clear contacts workbook
+                contacts.clear()
+                # Add headings back in
+                contacts.append_row(headings)
+                # Confirm deletion to user
+                print("All contacts successfully deleted.\n")
+                break
+            elif confirm_delete == "n":
+                # Divert user back to main menu
+                print("Contact deletion cancelled. Redirecting you to menu"
+                      "...\n")
+                main()
+                break
+
+    main()
+
+
+def validate_delete(pressed_key):
+    """
+    Inside the try, check to see if user has entered 'y' or 'n'.
+    Raises value error if user has pressed incorrect key.
+    """
+    try:
+        if pressed_key == "y":
+            return pressed_key
+        elif pressed_key == "n":
+            return pressed_key
+        else:
+            raise ValueError(
+                "Invalid input. 'Y' or 'N' required, you entered"
+                f" {pressed_key}\n"
+            )
+    except ValueError:
+        print(f"Invalid input: {pressed_key}. Please try again.\n")
+        return False
+
+    return True
 
 
 def main():
@@ -268,5 +337,10 @@ def main():
     choice = contacts_menu()
     direct_user(choice)
 
+
+# Print message first to appear on initializing contact book
+print("****************************************"
+      "***************************************")
+print("\t\t\t\tCONTACT BOOK", flush=False)
 
 main()
