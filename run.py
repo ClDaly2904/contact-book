@@ -238,8 +238,8 @@ def remove_contact():
         if validate_name(search_term):
             # if the search term in workbook, find row and delete it
             if search_workbook(search_term):
-                contact_to_delete = search_workbook(search_term).row
-                contacts.delete_rows(contact_to_delete)
+                confirmed_contact = contacts.find(search_term)
+                contacts.delete_rows(confirmed_contact.row)
                 # Confirm deletion to the user
                 print("Contact successfully deleted.\n")
                 break
@@ -254,7 +254,7 @@ def search_workbook(term):
     otherwise throws warning
     """
 
-    print(f"Searching contacts list for '{term}'\n")
+    print(f"Searching contacts list for '{term}'...\n")
 
     find_contact = contacts.find(term)
 
