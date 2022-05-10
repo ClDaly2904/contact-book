@@ -78,10 +78,9 @@ def direct_user(choice):
 
     if choice == '1':
         add_contact()
-
-        """
-    elif choice == 2:
+    elif choice == '2':
         remove_contact()
+        """
     elif choice == 3:
         delete_all()
     elif choice == 4:
@@ -215,6 +214,51 @@ def validate_email(email):
         return False
 
     return True
+
+
+def remove_contact():
+    """
+    Allows user to input the contact they want to delete,
+    passes term to search_workbook function and deletes row if found
+    """
+
+    print("****************************************"
+          "***************************************")
+    # Confirm to user which function they have selected
+    print("You have selected to delete a contact.")
+
+    while True:
+
+        search_term = input("Please input the first name or last name of"
+                            " contact:")
+
+        # Pass search term to name validator before searching workbook
+        if validate_name(search_term):
+            # if the search term in workbook, find row and delete it
+            if search_workbook(search_term):
+                contact_to_delete = search_workbook(search_term).row
+                contacts.delete_rows(contact_to_delete)
+                # Confirm deletion to the user
+                print("Contact successfully deleted.")
+                break
+
+
+def search_workbook(term):
+    """
+    Searches workbook and returns value if found,
+    otherwise throws warning
+    """
+
+    print(f"Searching contacts list for '{term}'")
+
+    find_contact = contacts.find(term)
+
+    if find_contact:
+        print(f"{term} found!")
+        return find_contact
+    else:
+        print(f"Contact '{term}' not found."
+              " Please try again.")
 
 
 def main():
