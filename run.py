@@ -379,15 +379,18 @@ def display_contact():
                 print(f"Email: {confirmed_info[4]}\n")
                 break
 
-    return confirmed_info
+    # Return row of chosen contact
+    return confirmed_contact
 
 
 def update_contact():
     """
-    Utilise search_contact function to find contact user wishes
+    Use search_contact function to find contact user wishes
     to update.
     User can then decide which field they would like to update
-    with an input method
+    with an input method.
+    Choice is validated and information passed to update_column
+    function
     """
 
     print("****************************************"
@@ -398,7 +401,8 @@ def update_contact():
     # is displayed to the terminal
     contact_to_update = display_contact()
 
-    # Loop repeats until user makes a valid number selection
+    # Loop repeats until user makes a valid number selection, allow user to
+    # select which information type they would like to update
     while True:
         print("Which would you like to update?")
         print("1. First name")
@@ -407,30 +411,60 @@ def update_contact():
         print("4. Phone number")
         print("5. Email")
 
+        # User input to select which contact field they would like to update
         update_choice = input("Please enter your choice: \n")
 
         if validate_choice(update_choice):
 
             if update_choice == "1":
                 update_heading = "first name"
-                # update_column(contact_to_update, 1)
+                update_column(update_heading, contact_to_update, 1)
+                break
             elif update_choice == "2":
                 update_heading = "last name"
-                # update_column(contact_to_update, 2)
+                update_column(update_heading, contact_to_update, 2)
+                break
             elif update_choice == "3":
                 update_heading = "address"
-                # update_column(contact_to_update, 3)
+                update_column(update_heading, contact_to_update, 3)
+                break
             elif update_choice == "4":
                 update_heading = "phone number"
-                # update_column(contact_to_update, 4)
+                update_column(update_heading, contact_to_update, 4)
+                break
             elif update_choice == "5":
                 update_heading = "email"
-                # update_column(contact_to_update, 5)
+                update_column(update_heading, contact_to_update, 5)
+                break
 
-            print("Selection accepted. "
-                  f"You have chosen to update the {update_heading} information"
-                  f" for {contact_to_update[0]} {contact_to_update[1]}\n")
-            break
+
+def update_column(heading, contact, column_no):
+    """
+    Receive information for contact and which column should be updated and
+    updates with user input.
+    """
+
+    # Retrieve values from row for fstring
+    contact_val = contacts.row_values(contact)
+
+    # Confirm contact and information type to be updated to user
+    print("Selection accepted. "
+          f"You have chosen to update the {heading} information"
+          f" for {contact_val[0]} {contact_val[1]}\n")
+
+    # User to input new data to be updated
+    new_info = input("Please enter the new information for contact:\n")
+
+    print("Updating contact information now...\n")
+
+    # Find cell in contacts spreadsheet and update it with the
+    # new info given by user
+    contacts.update_cell(contact, column_no, new_info)
+
+    # Confirm successful operation to user
+    print("Contact information successfully updated!\n")
+
+    main()
 
 
 def exit_phonebook():
