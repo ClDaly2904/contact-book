@@ -86,9 +86,9 @@ def direct_user(choice):
         display_all()
     elif choice == '6':
         update_contact()
+        """
     elif choice == '7':
         exit_phonebook()
-        """
 
 
 def add_contact():
@@ -372,9 +372,24 @@ def search_contact():
     main()
 
 
+def exit_phonebook():
+    """
+    Provide exit message to user and exit system
+    """
+
+    print("****************************************"
+          "***************************************")
+    print("System exiting...\n")
+    print("Thank you for using your contact book!")
+    print("****************************************"
+          "***************************************")
+
+    SystemExit()
+
+
 def main():
     """
-    Program to run all functions
+    Program to begin running all functions
     """
     choice = contacts_menu()
     direct_user(choice)
