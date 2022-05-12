@@ -73,21 +73,19 @@ def direct_user(choice):
     function and direct user to correct function
     """
 
-    if choice == '1':
+    if choice == "1":
         add_contact()
-    elif choice == '2':
+    elif choice == "2":
         remove_contact()
-    elif choice == '3':
+    elif choice == "3":
         delete_all()
-    elif choice == '4':
+    elif choice == "4":
         search_contact()
-        """
-    elif choice == '5':
-        display_all()
-    elif choice == '6':
+    # elif choice == "5":
+        # display_all()
+    elif choice == "6":
         update_contact()
-        """
-    elif choice == '7':
+    elif choice == "7":
         exit_phonebook()
 
 
@@ -344,17 +342,29 @@ def search_contact():
     # Confirm to user which function they have selected
     print("You have selected to search for a contact.\n")
 
+    display_contact()
+
+    main()
+
+
+def display_contact():
+    """
+    Gets user input, validates search term and retrieves contact
+    information.
+    Displays contact information to user in the terminal.
+    """
+
     while True:
 
         search_term = input("Please enter the first name or the surname"
-                            " of the contact you would like to search:\n")
+                            " of the contact:\n")
 
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
             # if the search term in workbook, find row and display to user
             if search_workbook(search_term):
 
-                print(f"Pulling up full information for {search_term}...\n")
+                print(f"Pulling up full information for '{search_term}'...\n")
 
                 # Find row number for contact
                 confirmed_contact = (contacts.find(search_term)).row
@@ -369,7 +379,58 @@ def search_contact():
                 print(f"Email: {confirmed_info[4]}\n")
                 break
 
-    main()
+    return confirmed_info
+
+
+def update_contact():
+    """
+    Utilise search_contact function to find contact user wishes
+    to update.
+    User can then decide which field they would like to update
+    with an input method
+    """
+
+    print("****************************************"
+          "***************************************")
+    print("You have chosen to update an existing contact.\n")
+
+    # User searches for contact they wish to update and contact information
+    # is displayed to the terminal
+    contact_to_update = display_contact()
+
+    # Loop repeats until user makes a valid number selection
+    while True:
+        print("Which would you like to update?")
+        print("1. First name")
+        print("2. Last name")
+        print("3. Address")
+        print("4. Phone number")
+        print("5. Email")
+
+        update_choice = input("Please enter your choice: \n")
+
+        if validate_choice(update_choice):
+
+            if update_choice == "1":
+                update_heading = "first name"
+                # update_column(contact_to_update, 1)
+            elif update_choice == "2":
+                update_heading = "last name"
+                # update_column(contact_to_update, 2)
+            elif update_choice == "3":
+                update_heading = "address"
+                # update_column(contact_to_update, 3)
+            elif update_choice == "4":
+                update_heading = "phone number"
+                # update_column(contact_to_update, 4)
+            elif update_choice == "5":
+                update_heading = "email"
+                # update_column(contact_to_update, 5)
+
+            print("Selection accepted. "
+                  f"You have chosen to update the {update_heading} information"
+                  f" for {contact_to_update[0]} {contact_to_update[1]}\n")
+            break
 
 
 def exit_phonebook():
