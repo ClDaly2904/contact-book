@@ -79,9 +79,9 @@ def direct_user(choice):
         remove_contact()
     elif choice == '3':
         delete_all()
-        """
     elif choice == '4':
         search_contact()
+        """
     elif choice == '5':
         display_all()
     elif choice == '6':
@@ -314,11 +314,14 @@ def validate_delete(pressed_key):
     Raises value error if user has pressed incorrect key.
     """
     try:
+        # Return y if user has pressed key
         if pressed_key == "y":
             return pressed_key
+        # Return n if user has pressed key
         elif pressed_key == "n":
             return pressed_key
         else:
+            # Reject user input, trigger loop again until acceptable input
             raise ValueError(
                 "Invalid input. 'Y' or 'N' required, you entered"
                 f" {pressed_key}\n"
@@ -328,6 +331,45 @@ def validate_delete(pressed_key):
         return False
 
     return True
+
+
+def search_contact():
+    """
+    Use search workbook function to find contact, get contact row,
+    break down and print contact information to the terminal
+    """
+
+    print("****************************************"
+          "***************************************")
+    # Confirm to user which function they have selected
+    print("You have selected to search for a contact.\n")
+
+    while True:
+
+        search_term = input("Please enter the first name or the surname"
+                            " of the contact you would like to search:\n")
+
+        # Pass search term to name validator before searching workbook
+        if validate_name(search_term):
+            # if the search term in workbook, find row and display to user
+            if search_workbook(search_term):
+
+                print(f"Pulling up full information for {search_term}...\n")
+
+                # Find row number for contact
+                confirmed_contact = (contacts.find(search_term)).row
+                # Get a list of all contact information
+                confirmed_info = contacts.row_values(confirmed_contact)
+
+                # Print contact information the terminal for user
+                print(f"First name: {confirmed_info[0]}")
+                print(f"Last name: {confirmed_info[1]}")
+                print(f"Address: {confirmed_info[2]}")
+                print(f"Phone number: {confirmed_info[3]}")
+                print(f"Email: {confirmed_info[4]}\n")
+                break
+
+    main()
 
 
 def main():
