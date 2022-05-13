@@ -481,6 +481,18 @@ def update_column(heading, contact, column_no):
     # User to input new data to be updated
     new_info = input("Please enter the new information for contact:\n")
 
+    # Send new info to relevant validation function for its type
+    while True:
+        if column_no == "1" or "2":
+            if validate_name(new_info):
+                break
+        elif column_no == "4":
+            if validate_number(new_info):
+                break
+        elif column_no == "5":
+            if validate_email(new_info):
+                break
+
     print("Updating contact information now...\n")
 
     # Find cell in contacts spreadsheet and update it with the
