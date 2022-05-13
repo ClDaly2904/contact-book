@@ -142,8 +142,9 @@ def add_contact():
 
     # Provides feedback to user that they have been successful
     print("Contact added successfully.\n")
-    # Return user back to menu
-    main()
+    # User chooses if they wish you update another contact or
+    # return to contacts book menu
+    run_again(add_contact)
 
 
 def validate_name(name):
@@ -242,8 +243,9 @@ def remove_contact():
                 print("Contact successfully deleted.\n")
                 break
 
-    # Return user back to menu
-    main()
+    # User can choose if they want to remove another contact
+    # or return to main contact book menu
+    run_again(remove_contact)
 
 
 def search_workbook(term):
@@ -287,7 +289,7 @@ def delete_all():
                                " or 'N' to cancel and return to menu: "
                                "\n").lower()
 
-        if validate_delete(confirm_delete):
+        if validate_key(confirm_delete):
             if confirm_delete == "y":
                 # Clear contacts workbook
                 contacts.clear()
@@ -295,6 +297,9 @@ def delete_all():
                 contacts.append_row(headings)
                 # Confirm deletion to user
                 print("All contacts successfully deleted.\n")
+                # Automatically redirects user to menu as no more
+                # contacts to delete
+                print("Automatically redirecting you to menu...\n")
                 break
             elif confirm_delete == "n":
                 # Divert user back to main menu
@@ -303,10 +308,8 @@ def delete_all():
                 main()
                 break
 
-    main()
 
-
-def validate_delete(pressed_key):
+def validate_key(pressed_key):
     """
     Inside the try, check to see if user has entered 'y' or 'n'.
     Raises value error if user has pressed incorrect key.
@@ -344,7 +347,7 @@ def search_contact():
 
     display_contact()
 
-    main()
+    run_again(search_contact)
 
 
 def display_contact():
@@ -406,7 +409,7 @@ def display_all():
         print(headings, list_of_contacts)
         print("\n")
 
-    main()
+    run_again(display_all)
 
 
 def update_contact():
@@ -502,7 +505,7 @@ def update_column(heading, contact, column_no):
     # Confirm successful operation to user
     print("Contact information successfully updated!\n")
 
-    main()
+    run_again(update_contact)
 
 
 def exit_phonebook():
@@ -518,6 +521,32 @@ def exit_phonebook():
           "***************************************")
 
     SystemExit()
+
+
+def run_again(function):
+    """
+    Give user the option to run the same function again or
+    return to the main menu.
+    Provides better user experience
+    """
+
+    print("****************************************"
+          "***************************************")
+
+    while True:
+
+        print("Would you like to run this function again?")
+        repeat_function = input("Please enter 'Y' to run function again, or"
+                                " 'N' to return to the main contact"
+                                " book menu:\n").lower()
+
+        if validate_key(repeat_function):
+            if repeat_function == "y":
+                function()
+                break
+            elif repeat_function == "n":
+                main()
+                break
 
 
 def main():
