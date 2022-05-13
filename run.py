@@ -81,8 +81,8 @@ def direct_user(choice):
         delete_all()
     elif choice == "4":
         search_contact()
-    # elif choice == "5":
-        # display_all()
+    elif choice == "5":
+        display_all()
     elif choice == "6":
         update_contact()
     elif choice == "7":
@@ -381,6 +381,32 @@ def display_contact():
 
     # Return row of chosen contact
     return confirmed_contact
+
+
+def display_all():
+    """
+    Retrieves all cell values and prints them to the terminal
+    as a list of dictionaries
+    """
+
+    print("****************************************"
+          "***************************************")
+    # Confirm to user which function they have selected
+    print("You have selected to display all contacts.\n")
+    print("Retrieving list of contacts now...\n")
+
+    # Retrieve all values from contacts workbook as list
+    # of dictionaries
+    list_of_contacts = contacts.get_all_records()
+
+    # Iterate through list of contacts
+    for headings, list_of_contacts in enumerate(list_of_contacts, start=1):
+        # Print contact information in enumerated list, allows user
+        # to see how many contacts they have
+        print(headings, list_of_contacts)
+        print("\n")
+
+    main()
 
 
 def update_contact():
