@@ -118,9 +118,14 @@ def add_contact():
             new_contact.append(contact_lname)
             break
 
-    contact_address = input("Please enter contact address including postcode: "
-                            "\n")
-    new_contact.append(contact_address)
+    while True:
+        # Assigns variable for address to user input
+        contact_address = input("Please enter contact address including "
+                                " postcode:\n")
+
+        if validate_address(contact_address):
+            new_contact.append(contact_address)
+            break
 
     while True:
         contact_number = input("Please enter contact number: \n")
@@ -159,6 +164,24 @@ def validate_name(name):
 
     if not all(char in valid_characters for char in name):
         print("Invalid data. Allowed characters are alphabet, hyphen or space."
+              "\n")
+        return False
+    else:
+        return True
+
+
+def validate_address(address):
+    """
+    Checks user input to make sure that user has
+    not used any numbers or special characters
+    """
+
+    # Adding valid characters variable for validation rather than using
+    # .isalpha() as some addresses may contain blank spaces, hyphens and commas
+    invalid_characters = "?!/+_=-()*^%$£@#~"
+
+    if any(char in invalid_characters for char in address):
+        print("Invalid data. Special characters not allowed for address."
               "\n")
         return False
     else:
@@ -490,9 +513,10 @@ def update_column(heading, contact, column_no):
     # Retrieve values from row for fstring
     contact_val = contacts.row_values(contact)
 
+    update_message = "Updating contact information now...\n"
+
     # Confirm contact and information type to be updated to user
-    print("Selection accepted. "
-          f"You have chosen to update the {heading} information"
+    print(f"You have chosen to update the {heading} information"
           f" for {contact_val[0]} {contact_val[1]}\n")
 
     # User to input new data to be updated
@@ -502,15 +526,28 @@ def update_column(heading, contact, column_no):
     while True:
         if column_no == "1" or "2":
             if validate_name(new_info):
+                print(update_message)
                 break
+            else:
+                update_column(heading, contact, column_no)
+        elif column_no == "3":
+            if validate_address(new_info):
+                print(update_message)
+                break
+            else:
+                update_column(heading, contact, column_no)
         elif column_no == "4":
             if validate_number(new_info):
+                print(update_message)
                 break
+            else:
+                update_column(heading, contact, column_no)
         elif column_no == "5":
             if validate_email(new_info):
+                print(update_message)
                 break
-
-    print("Updating contact information now...\n")
+            else:
+                update_column(heading, contact, column_no)
 
     # Find cell in contacts spreadsheet and update it with the
     # new info given by user
