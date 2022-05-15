@@ -238,10 +238,24 @@ def remove_contact():
             # if the search term in workbook, find row and delete it
             if search_workbook(search_term):
                 confirmed_contact = contacts.find(search_term)
-                contacts.delete_rows(confirmed_contact.row)
-                # Confirm deletion to the user
-                print("Contact successfully deleted.\n")
-                break
+                confirmed_info = contacts.row_values(confirmed_contact.row)
+
+                print(f"Are you sure you want to delete "
+                      f"{confirmed_info[0]} {confirmed_info[1]}"
+                      f"?\n")
+                delete_contact = input("Please enter 'Y' to delete and 'N'"
+                                       " to return to contact book "
+                                       "menu:\n").lower()
+
+                if validate_key(delete_contact):
+                    if delete_contact == "y":
+                        contacts.delete_rows(confirmed_contact.row)
+                        # Confirm deletion to the user
+                        print("Contact successfully deleted.\n")
+                        break
+                    elif delete_contact == "n":
+                        print("Contact deletion cancelled.\n")
+                        break
 
     # User can choose if they want to remove another contact
     # or return to main contact book menu
