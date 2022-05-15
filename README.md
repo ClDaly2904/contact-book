@@ -211,6 +211,14 @@ Whilst planning the functionality for the contacts book, I had to consider how I
     - Heroku for deployment and to host the Code Institute mock terminal to run the program
 
 
+## Credits
+
+- To help form the basis for the different functions I would need for this project, I used this article from [Geeks for Geeks](https://www.geeksforgeeks.org/implementing-a-contacts-directory-in-python/) as a shell, then build my own custom code using different technologies. I also used this as a basis for my main contacts menu
+- I took inspiration from the [Code Institute's](https://codeinstitute.net/) Love Sandwiches Project. In particular, I followed the videos to help with setting up APIs and credentials
+- Websites such as [Real Python](https://realpython.com/) were a good resource. I used this one for exploring the enumerate function
+- As always, [Stack Overflow](https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z) is a great reference when it comes to troubleshooting and helped me with code such as the validation functions
+- To help me navigate all of the different options available to me using the gspread library, I used the [gspread user guide](https://docs.gspread.org/en/latest/user-guide.html). This documentation was of great help when I was figuring out how to retrieve information from the google sheet
+
 
 
 ## Reminders
