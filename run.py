@@ -69,7 +69,7 @@ def validate_choice(values, no_of_choices):
 
     # Throws error if user has not entered a number
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again\n")
+        print(f"Invalid data: {e}, please try again.\n")
         return False
 
     return True
@@ -211,7 +211,7 @@ def validate_number(values):
             if len(num) != 11:
                 # Throws error if user input is not required length
                 raise ValueError(
-                    "Minimum value required is 10, maximum 11."
+                    "Minimum value required is 10, maximum 11. "
                     f"You provided {len(num)}"
                 )
     # Throws error if user has not entered a number
@@ -232,16 +232,15 @@ def validate_email(email):
     try:
         if "@" not in email:
             raise ValueError(
-                "Email address requires @ and ."
+                "Missing '@'. Email address requires '@' and '.'"
             )
         elif "." not in email:
             raise ValueError(
-                "Email address requires @ and ."
+                "Missing '.'. Email address requires '@' and '.'"
             )
-    except ValueError:
+    except ValueError as e:
         # Provide error message to user with example of correct format
-        print("Invalid data, email must contain '@' and '.'"
-              ". Please try again.")
+        print(f"Invalid data: {e}, please try again\n")
         print("Example: contact@email.com\n")
         return False
 
@@ -370,10 +369,10 @@ def validate_key(pressed_key):
             # Reject user input, trigger loop again until acceptable input
             raise ValueError(
                 "Invalid input. 'Y' or 'N' required, you entered"
-                f" {pressed_key}\n"
+                f" {pressed_key}"
             )
-    except ValueError:
-        print(f"Invalid input: {pressed_key}. Please try again.\n")
+    except ValueError as e:
+        print(f"Invalid: {e}. Please try again.\n")
         return False
 
     return True
