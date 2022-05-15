@@ -39,14 +39,14 @@ def contacts_menu():
 
         choice = input("Please enter your choice: \n")
 
-        if validate_choice(choice):
+        if validate_choice(choice, 7):
             print("Selection accepted. Redirecting you now...\n")
             break
 
     return choice
 
 
-def validate_choice(values):
+def validate_choice(values, no_of_choices):
     """
     Inside the try, check the user has only entered one character,
     and that character is an integer
@@ -58,10 +58,18 @@ def validate_choice(values):
             raise ValueError(
                  f"Select 1 option from the list. You provided {len(num)}\n"
             )
+        if int(values) > no_of_choices:
+            raise ValueError(
+                f"{num} is not a valid option from the list"
+            )
+        if values == "0":
+            raise ValueError(
+                f"{num} is not a valid option from the list"
+            )
 
     # Throws error if user has not entered a number
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        print(f"Invalid data: {e}, please try again\n")
         return False
 
     return True
@@ -480,7 +488,7 @@ def update_contact():
         # User input to select which contact field they would like to update
         update_choice = input("Please enter your choice: \n")
 
-        if validate_choice(update_choice):
+        if validate_choice(update_choice, 5):
 
             if update_choice == "1":
                 update_heading = "first name"
