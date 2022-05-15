@@ -35,7 +35,7 @@ def contacts_menu():
         print("4. Search for a contact")
         print("5. Display all contacts")
         print("6. Update existing contact")
-        print("7. Exit phonebook")
+        print("7. Exit contact book")
 
         choice = input("Please enter your choice: \n")
 
