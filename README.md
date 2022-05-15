@@ -190,6 +190,25 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - If a user input does not meet the validation requirements, an error message will be displayed to the user. This informs the user that there has been an error and improves user experience by telling them what they have done wrong
 
 
+### Possible future features
+
+- Add a 'Favourites' List for user to add all their most used contacts
+
+
+## Technologies used
+
+- Pep8 validator to check my run.py file for errors
+- Github to host my repository
+- Gitpod as an open-source developer platform used to write my code (using VS Code)
+- Visual Code Studio (VS Code)
+    - Visual Studio Code is a streamlined code editor with support for development operations like debugging, task running and version control
+    - I used several VS Code extensions to help make my work more efficient, such as:
+        - Auto Open Preview Page (opens a preview panel when markdown file is opened)
+        - Python exentsion to provide rich support and help with things like debugging, code navigation and code formatting
+- Python libraries
+    - gspread - Python API for google sheets. Allows user to open a spreadsheet, read/write/format cell ranges and provides sharing and access control
+    - google auth - the Google authentication library for Python. Provides the ability, to authenticate to Google APIs and integrate with HTTP libraries
+    - Heroku for deployment and to host the Code Institute mock terminal to run the program
 
 
 
