@@ -174,6 +174,9 @@ def validate_name(name):
         print("Invalid data. Allowed characters are alphabet, hyphen or space."
               "\n")
         return False
+    elif len(name) < 2:
+        print("Invalid data. Minimum value 2 characters. \n")
+        return False
     else:
         return True
 
@@ -189,8 +192,12 @@ def validate_address(address):
     invalid_characters = "?!/+_=-()*^%$£@#~"
 
     if any(char in invalid_characters for char in address):
-        print("Invalid data. Special characters not allowed for address."
-              "\n")
+        print("Invalid data: Special characters not allowed for address."
+              " Please try again.\n")
+        return False
+    elif len(address) < 10:
+        print("Invalid data: Minimum value 10 characters."
+              f" You entered {len(address)}, please try again. \n")
         return False
     else:
         return True
@@ -237,6 +244,11 @@ def validate_email(email):
         elif "." not in email:
             raise ValueError(
                 "Missing '.'. Email address requires '@' and '.'"
+            )
+        elif len(email) < 10:
+            raise ValueError(
+                f"Minimum value 10 characters. "
+                f"You entered {len(email)}"
             )
     except ValueError as e:
         # Provide error message to user with example of correct format
