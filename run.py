@@ -511,23 +511,23 @@ def update_contact():
 
             if update_choice == "1":
                 update_heading = "first name"
-                update_column(update_heading, contact_to_update, 1)
+                update_column(update_heading, contact_to_update, "1")
                 break
             elif update_choice == "2":
                 update_heading = "last name"
-                update_column(update_heading, contact_to_update, 2)
+                update_column(update_heading, contact_to_update, "2")
                 break
             elif update_choice == "3":
                 update_heading = "address"
-                update_column(update_heading, contact_to_update, 3)
+                update_column(update_heading, contact_to_update, "3")
                 break
             elif update_choice == "4":
                 update_heading = "phone number"
-                update_column(update_heading, contact_to_update, 4)
+                update_column(update_heading, contact_to_update, "4")
                 break
             elif update_choice == "5":
                 update_heading = "email"
-                update_column(update_heading, contact_to_update, 5)
+                update_column(update_heading, contact_to_update, "5")
                 break
 
 
@@ -547,33 +547,56 @@ def update_column(heading, contact, column_no):
           f" for {contact_val[0]} {contact_val[1]}\n")
 
     # User to input new data to be updated
-    new_info = input("Please enter the new information for contact:\n")
 
     # Send new info to relevant validation function for its type
-    while True:
-        if column_no == "1" or "2":
-            if validate_name(new_info):
-                print(update_message)
-                break
-        elif column_no == "3":
-            if validate_address(new_info):
-                print(update_message)
-                break
-        elif column_no == "4":
-            if validate_number(new_info):
-                print(update_message)
-                break
-        elif column_no == "5":
-            if validate_email(new_info):
+    if column_no == "1" or "2":
+        while True:
+            new_name = input("Please enter new contact name:\n")
+
+            if validate_name(new_name):
                 print(update_message)
                 break
 
-    # Find cell in contacts spreadsheet and update it with the
-    # new info given by user
-    contacts.update_cell(contact, column_no, new_info)
+        # Find cell in contacts spreadsheet and update it with the
+        # new info given by user
+        contacts.update_cell(contact, column_no, new_name)
 
-    # Confirm successful operation to user
-    print("Contact information successfully updated!\n")
+        # Confirm successful operation to user
+        print("Contact information successfully updated!\n")
+
+    elif column_no == "3":
+        while True:
+            new_address = input("Please enter a new address:\n")
+
+            if validate_address(new_address):
+                print(update_message)
+                break
+
+        contacts.update_cell(contact, column_no, new_address)
+        print("Contact information successfully updated!\n")
+
+    elif column_no == "4":
+        while True:
+            new_number = input("Please enter new phone number:\n")
+
+            if validate_number(new_number):
+                print(update_message)
+                break
+
+        contacts.update_cell(contact, column_no, new_number)
+
+        print("Contact information successfully updated!\n")
+    elif column_no == "5":
+        while True:
+            new_email = input("Please enter new email address:\n")
+
+            if validate_email(new_email):
+                print(update_message)
+                break
+
+        contacts.update_cell(contact, column_no, new_email)
+
+        print("Contact information successfully updated!\n")
 
     run_again(update_contact)
 
