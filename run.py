@@ -277,9 +277,9 @@ def remove_contact():
 
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
-            if validate_return(search_term):
-                # if the search term in workbook, find row and delete it
-                if search_workbook(search_term):
+            # if the search term in workbook, find row and delete it
+            if search_workbook(search_term, remove_contact):
+                if validate_return(search_term):
                     confirmed_contact = contacts.find(search_term)
                     confirmed_info = contacts.row_values(confirmed_contact.row)
 
@@ -300,14 +300,14 @@ def remove_contact():
                             print("Contact deletion cancelled.\n")
                             break
             else:
-                break
+                return False
 
     # User can choose if they want to remove another contact
     # or return to main contact book menu
     run_again(remove_contact)
 
 
-def search_workbook(term):
+def search_workbook(term, function):
     """
     Searches workbook and returns value if found,
     otherwise throws warning
@@ -324,6 +324,8 @@ def search_workbook(term):
     else:
         print(f"Contact '{term}' not found."
               " Please try again.\n")
+        run_again(function)
+        return False
 
 
 def delete_all():
@@ -424,7 +426,7 @@ def display_contact():
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
             # if the search term in workbook, find row and display to user
-            if search_workbook(search_term):
+            if search_workbook(search_term, display_contact):
                 if validate_return(search_term):
                     print(f"Pulling up full information for '{search_term}'"
                           "...\n")
@@ -639,25 +641,25 @@ def validate_return(term):
     elif no_contacts > 1:
         search = term
 
-    first_names = contacts.col_values(1)
-    last_names = contacts.col_values(2)
-    index = 1
-    rows = []
+        first_names = contacts.col_values(1)
+        last_names = contacts.col_values(2)
+        index = 1
+        rows = []
 
-    print("Multiple matches found.")
-    for last_name in last_names:
-        if last_name == search:
-            rows.append(index)
-            index += 1
+        print("Multiple matches found.")
+        for last_name in last_names:
+            if last_name == search:
+                rows.append(index)
+                index += 1
 
             first_names = contacts.col_values(1)
             first_name = first_names[index]
             print(f"{index}. {first_name} {last_name}")
 
-    print("Please refine search criteria and try again.")
+        print("Please refine search criteria and try again.")
 
-    main()
-    return False
+        main()
+        return False
 
 
 def main():
