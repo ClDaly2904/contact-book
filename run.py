@@ -555,26 +555,18 @@ def update_column(heading, contact, column_no):
             if validate_name(new_info):
                 print(update_message)
                 break
-            else:
-                update_column(heading, contact, column_no)
         elif column_no == "3":
             if validate_address(new_info):
                 print(update_message)
                 break
-            else:
-                update_column(heading, contact, column_no)
         elif column_no == "4":
             if validate_number(new_info):
                 print(update_message)
                 break
-            else:
-                update_column(heading, contact, column_no)
         elif column_no == "5":
             if validate_email(new_info):
                 print(update_message)
                 break
-            else:
-                update_column(heading, contact, column_no)
 
     # Find cell in contacts spreadsheet and update it with the
     # new info given by user
@@ -632,29 +624,35 @@ def validate_return(term):
     checks to see how many return results there are
     """
 
-    rows = contacts.find(term).row
-    list_of_contacts = contacts.row_values(rows)
+    list_of_contacts = contacts.findall(term)
     no_contacts = len(list_of_contacts)
 
     if no_contacts == 1:
         return term
     elif no_contacts > 1:
-        search = term
+        print("Multiple matches found.")
 
         first_names = contacts.col_values(1)
         last_names = contacts.col_values(2)
         index = 1
         rows = []
 
-        print("Multiple matches found.")
-        for last_name in last_names:
-            if last_name == search:
-                rows.append(index)
-                index += 1
+        if term in last_names:
+            for last_name in last_names:
+                if last_name == term:
+                    rows.append(index)
+                    index += 1
 
-            first_names = contacts.col_values(1)
-            first_name = first_names[index]
-            print(f"{index}. {first_name} {last_name}")
+                first_name = first_names[index]
+                print(f"{first_name} {last_name}")
+        elif term in first_names:
+            for first_name in first_names:
+                if first_name == term:
+                    rows.append(index)
+                    index += 1
+
+                last_name = last_names[index]
+                print(f"{first_name} {last_name}")
 
         print("Please refine search criteria and try again.")
 
