@@ -170,6 +170,7 @@ def validate_name(name):
     # Adding valid characters variable for validation rather than using
     # .isalpha() as some names may contain blank spaces or hyphens
     valid_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -'
+    alpha_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     if not all(char in valid_characters for char in name):
         print("Invalid data. Allowed characters are alphabet, hyphen or space."
@@ -177,6 +178,10 @@ def validate_name(name):
         return False
     elif len(name) < 2:
         print("Invalid data. Minimum value 2 characters. \n")
+        return False
+    elif not any(char in alpha_characters for char in name):
+        print("Invalid data: Name must contain alphabet.")
+        print("Cannot contain just blank space or hyphen.\n")
         return False
     else:
         return True
@@ -190,7 +195,8 @@ def validate_address(address):
 
     # Adding valid characters variable for validation rather than using
     # .isalpha() as some addresses may contain blank spaces, hyphens and commas
-    invalid_characters = "?!/+_=-()*^%$£@#~"
+    invalid_characters = "?!/+_=()*^%$£@#~"
+    alpha_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     if any(char in invalid_characters for char in address):
         print("Invalid data: Special characters not allowed for address."
@@ -199,6 +205,10 @@ def validate_address(address):
     elif len(address) < 10:
         print("Invalid data: Minimum value 10 characters."
               f" You entered {len(address)}, please try again. \n")
+        return False
+    elif not any(char in alpha_characters for char in address):
+        print("Invalid data: Name must contain alphabet.")
+        print("Cannot contain just blank space or hyphen.\n")
         return False
     else:
         return True
@@ -236,6 +246,7 @@ def validate_email(email):
     necessary characters '@' and '.'.
     Raises ValueError if user has not input email characters
     """
+    alpha_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     try:
         if "@" not in email:
@@ -250,6 +261,11 @@ def validate_email(email):
             raise ValueError(
                 f"Minimum value 10 characters. "
                 f"You entered {len(email)}"
+            )
+        elif not any(char in alpha_characters for char in email):
+            raise ValueError(
+                "Name must contain alphabet."
+                "Cannot contain just blank space or hyphen"
             )
     except ValueError as e:
         # Provide error message to user with example of correct format
@@ -467,6 +483,7 @@ def display_all():
     # of dictionaries
     list_of_contacts = contacts.get_all_records()
 
+    # Prints list of contacts in a table
     print(tabulate(list_of_contacts, headers='keys', tablefmt='fancy_grid'))
 
     run_again(display_all)
@@ -629,10 +646,13 @@ def run_again(function):
                                 " 'N' to return to the main contact"
                                 " book menu:\n").lower()
 
+        # Runs function to check what key the user has pressed
         if validate_key(repeat_function):
+            # Runs the same function again for the user if 'y'
             if repeat_function == "y":
                 function()
                 break
+            # Takes user back to menu if 'n'
             elif repeat_function == "n":
                 main()
                 break
@@ -644,6 +664,7 @@ def validate_return(term):
     """
 
     list_of_contacts = contacts.findall(term)
+    # Get number of contacts matching search term
     no_contacts = len(list_of_contacts)
 
     if no_contacts == 1:
