@@ -1,6 +1,7 @@
 # importing the python libraries
 import gspread
 from google.oauth2.service_account import Credentials
+from tabulate import tabulate
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -466,12 +467,7 @@ def display_all():
     # of dictionaries
     list_of_contacts = contacts.get_all_records()
 
-    # Iterate through list of contacts
-    for headings, list_of_contacts in enumerate(list_of_contacts, start=1):
-        # Print contact information in enumerated list, allows user
-        # to see how many contacts they have
-        print(headings, list_of_contacts)
-        print("\n")
+    print(tabulate(list_of_contacts, headers='keys', tablefmt='fancy_grid'))
 
     run_again(display_all)
 
