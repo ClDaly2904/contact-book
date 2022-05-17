@@ -238,6 +238,11 @@ As the contact book was becoming more whole, I could begin testing functionaliti
     - After a lot of tinkering, I rebuilt this function to mimic the validation used in the add_contact function, so this time the if loops for the column number are on the outside, and nested inside are individual while True loops, with the if loops for validation nested inside that.
 
 
+## Validators
+
+To check that my python file had no syntax errors, I ran it through both the [PEP8](http://pep8online.com/checkresult) Python Validator and the [Extends Class](https://extendsclass.com/python-tester.html) Python Code Checker.
+
+
 ## Credits
 
 - To help form the basis for the different functions I would need for this project, I used this article from [Geeks for Geeks](https://www.geeksforgeeks.org/implementing-a-contacts-directory-in-python/) as a shell, then build my own custom code using different technologies. I also used this as a basis for my main contacts menu
