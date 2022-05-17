@@ -1,3 +1,91 @@
+"""
+Contact book is an application that uses a terminal run
+by Python code to access a google sheets document.
+The user can retrieve, add and update information stored
+in the google sheets document.
+
+Uses gspread, googleauth and tabulate libraries.
+
+Functions:
+
+contacts_menu()
+- allows user to navigate different functions
+by providing a menu
+
+validate_choice()
+- takes 2 arguments, the value and numer of choices
+- checks user input is valid
+
+direct_user()
+- takes 1 argument, choice
+- takes user to chosen function based on the number
+they have input
+
+add_contact()
+- provides user with input fields for first name, last
+name, number, email, address
+- runs inputs through validators and adds values to spreadsheet
+
+validate_name()
+- takes 1 argument for name
+- checks name input valid
+
+validate_number()
+- takes 1 argument, number
+- checks number input valid
+
+validate_address()
+- takes 1 argument, address
+- checks address input valid
+
+validate_email()
+- takes 1 argument, email
+- checks email input valid
+
+remove_contact()
+- allows user to delete contact row in spreadsheet
+
+search_workbook()
+- takes 2 arguments, term, function
+- checks workbook to see if searched term is present
+
+delete_all()
+- clears all data in spreadsheet
+
+validate_key()
+- takes 1 argument, pressed_key
+- checks if the user has pressed 'y' or 'n'
+- required when user wants to delete something
+
+search_contact()
+- allows user to search for a contact and display
+their data in the terminal
+
+display_all()
+- displays all contacts in the spreadsheet
+
+update_contact()
+- allows the user to search a contact they want to update
+and select the information they would like to update
+
+update_column()
+- takes 3 arguments, heading, contact, column_no
+- user enters new information, function passes input to
+validators and updates relevant column for contact
+
+exit phonebook()
+- exits contact book system
+- prints thank you message to user
+
+validate_return()
+- takes 1 argument, term
+- checks search term to see if more than one result
+has been returned, and if so, prints them all to the
+terminal
+
+
+"""
+
 # importing the python libraries
 import gspread
 from google.oauth2.service_account import Credentials
