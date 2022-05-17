@@ -235,7 +235,9 @@ As the contact book was becoming more whole, I could begin testing functionaliti
 - User input not running through validators in update_contact function:
     - When I originally built the update_contact function, the variable containing the input (new_info) was passing through validators and the new data was getting updated to the spreadsheet even if it contained invalid data.
     - The if loop for validation was nested inside the if loop to find the matching column number, and in turn these were nested inside single while loop for while True. It seemed to me that if the validation loop inside failed, it did not break the outer while loop, so the function continued and the new_info value was updated anyway.
-    - After a lot of tinkering, I rebuilt this function to mimic the validation used in the add_contact function, so this time the if loops for the column number are on the outside, and nested inside are individual while True loops, with the if loops for validation nested inside that.
+    - I rebuilt this function to mimic the validation used in the add_contact function, so this time the if loops for the column number are on the outside, and nested inside are individual while True loops, with the if loops for validation nested inside that.
+    - However, even after this the issue still persisted and whichever data type I wanted to update, the terminal was asking me to enter a new first or last name. This made me focus on the code for validating and updating new names and I found it was the use of the key word 'or' in the if condition "1" or "2".
+    - After removing the or keyword the function runs correctly.
 
 
 ## Validators
