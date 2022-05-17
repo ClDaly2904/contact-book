@@ -77,6 +77,9 @@ exit phonebook()
 - exits contact book system
 - prints thank you message to user
 
+main()
+- runs main program
+
 """
 
 # importing the python libraries
@@ -392,7 +395,25 @@ def remove_contact():
 
             if validate_key(delete_contact):
                 if delete_contact == "y":
-                    contacts.delete_row(confirmed_info[0].row)
+
+                    first_names = contacts.col_values(1)
+                    last_names = contacts.col_values(2)
+                    index = 1
+                    if confirmed_info[0] in first_names:
+                        for confirmed_info[0] in first_names:
+                            if (((confirmed_info[0]) in first_names) and
+                               (confirmed_info[1]) in last_names):
+                                row = index
+                            index += 1
+                    elif confirmed_info[1] in last_names:
+                        for confirmed_info[1] in last_names:
+                            if (((confirmed_info[0]) in first_names) and
+                               (confirmed_info[1]) in last_names):
+                                row = index
+                            index += 1
+
+                    contacts.delete_rows((row - 1))
+
                     # Confirm deletion to the user
                     print("Contact successfully deleted.\n")
                     break
