@@ -150,6 +150,7 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 ### Update contact function
 
 - Lets the user update information for an existing contact
+- First, the user searches for the contact they would like to update. If the contact is found, they are presented with a list of options containing the different contact information fields. If the contact is not found, the user is presented with the option to search again or return to the menu
 - The user chooses which information field they would like to update by entering a number. I decided this was more user friendly than the user having to input the whole contact again with the new changes, and the user can always run the function again if they have more than one change to implement
 - The user then inputs the new information for that contact, which is run through the validator for the respective data type
 - Terminal confirms update in contact information
@@ -179,15 +180,18 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - Name validation
     - Does not allow numbers or special characters (other than space and hyphen as these can occur in names)
     - Minimum length requirement ('2')
+    - Will only accept if alphabet characters present (will not accept if user enters only hyphens or spaces)
 - Address validation
-    - Limits on special characters
+    - Limits on special characters - allow numbers, hyphen, spaces that could be needed for addresses
     - Minimum length requirement ('10')
+    - Will only accept if alphabet characters present
 - Number validation
     - Only allow numbers
     - Number of values must be either '10' or '11'
 - Email validation
     - Minimum length value '10'
     - Must include '@' and '.'
+    - Will only accept if alphabet characters present, will not accept if user only enters '@' and '.'
 - If a user input does not meet the validation requirements, an error message will be displayed to the user. This informs the user that there has been an error and improves user experience by telling them what they have done wrong
 
 
@@ -215,11 +219,24 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 
 ## Testing
 
+Throughout making this contact book, I was regularly testing my code. Using the terminal in Gitpod at each stage of a new function allowed me to pick up on and elimiate many bugs or errors as they started to form.
+
+For example, when creating a new function, I ran simple tests such as trying to print 'connected' to the terminal to check it was correctly being called when needed.
+
+As the contact book was becoming more whole, I could begin testing functionalities as whole, such as adding a new contact then searching for and deleting it. Trialling the different features in both the Gitpod terminal and the mock terminal on the live Heroku site allowed me to discover and explore the fixed bugs detailed below.
+
 ### Fixed Bugs
-    - Messages being printed to terminal more than once
-        - One of the first bugs I discovered and fixed in my testing phase was to do with the search_workbook function. The print out to in the terminal to tell the user that the search was being carried out, and if the contact had been found was being repeated.
-        - After reviewing the code, I found the error inside the search_contact function. I had called upon the display_contact function twice - once to deliberately call upon the function, but I had also originally used the return value from the search_workbook function to define the confirmed_contact function, thus running the function again and causing it to print to the terminal twice.
-        - To fix this, I removed the inital line of code where I called the search_workbook function as it was the confirmed_contact variable that was required
+
+- Messages being printed to terminal more than once:
+    - One of the first bugs I discovered and fixed in my testing phase was to do with the search_workbook function. The print out to in the terminal to tell the user that the search was being carried out, and if the contact had been found was being repeated.
+    - After reviewing the code, I found the error inside the search_contact function. I had called upon the display_contact function twice - once to deliberately call upon the function, but I had also originally used the return value from the search_workbook function to define the confirmed_contact function, thus running the function again and causing it to print to the terminal twice.
+    - To fix this, I removed the inital line of code where I called the search_workbook function as it was the confirmed_contact variable that was required.
+
+- User input not running through validators in update_contact function:
+    - When I originally built the update_contact function, the variable containing the input (new_info) was passing through validators and the new data was getting updated to the spreadsheet even if it contained invalid data.
+    - The if loop for validation was nested inside the if loop to find the matching column number, and in turn these were nested inside single while loop for while True. It seemed to me that if the validation loop inside failed, it did not break the outer while loop, so the function continued and the new_info value was updated anyway.
+    - After a lot of tinkering, I rebuilt this function to mimic the validation used in the add_contact function, so this time the if loops for the column number are on the outside, and nested inside are individual while True loops, with the if loops for validation nested inside that.
+
 
 ## Credits
 
