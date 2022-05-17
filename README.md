@@ -24,7 +24,7 @@
 
 ## About
 
-Contacts book is a Python terminal database, which runs in the Code Institute mock terminal on Heroku.
+Contacts book is a Python application connected to a google sheet spreadsheet, which runs in the Code Institute mock terminal on Heroku.
 
 Users can create, access and delete records of their contacts including name, address, number and email.
 
@@ -34,30 +34,30 @@ Users can create, access and delete records of their contacts including name, ad
 
 - For users that want to compile their contacts
 - For users that already have a physical contact book, but are looking to transfer this to a digital version
-- For users that are familiar to accessing information on a digital database
-- For users new to accessing information on a digital database
+- For users that are familiar to accessing information on a digital spreadsheet
+- For users new to accessing information on a digital spreadsheet
 
 
 ### User Stories
 
 - As a user, I am looking to store my contacts digitally
-- As a user, I need to be able to add contacts to the database
+- As a user, I need to be able to add contacts to the spreadsheet
 - As a user, I need to be see my list of contacts
 - As a user, I would like to be able to search for my contacts
 - As a user, I need to be able to update any changes to my contacts
 - As a user, I need an interface that lets me navigate my stored information
-- As a user, I need clear instructions how to navigate the database
+- As a user, I need clear instructions how to navigate the spreadsheet
 
 
 ### Contact Book Aims
 
-- To create a database that runs in the terminal (in this case the Code Institute mock terminal run on Heroku)
-- To provide the user with a valuable database where they can store their contact information
-- To provide the user with a means to navigate the database and access their information
+- To create a spreadsheet that runs in the terminal (in this case the Code Institute mock terminal run on Heroku)
+- To provide the user with a valuable spreadsheet where they can store their contact information
+- To provide the user with a means to navigate the spreadsheet and access their information
 - To provide clear navigation between different functions
 - To provide the user with a means to amend their stored information
 - To allow the user to delete any unwanted information
-- To make sure that the user is only entering valid information into the database
+- To make sure that the user is only entering valid information into the spreadsheet
 
 
 ### First Time Visitors
@@ -131,6 +131,7 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - Allows user to search for contact and retrieves the information for that contact
 - User can search for contact by using either their first name or their last name
 - If contact is found, all of the information for that contact is displayed to the terminal
+- If contact is not found, user has the option to return to the main menu or try another search
 
 
 ### Display all contacts function
@@ -142,7 +143,7 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 ### Delete all contacts function
 
 - Allows the user to delete all of their current contact information
-- If selected from the main contacts menu, the user will have to confirm that they want to delete all contacts using 'y' or 'n'. This helps avoid the user accidentally clearing their contacts database
+- If selected from the main contacts menu, the user will have to confirm that they want to delete all contacts using 'y' or 'n'. This helps avoid the user accidentally clearing their contacts spreadsheet
 - Confirms deletion of all contacts in the terminal if user chooses 'y', or cancels deletion and returns user to the menu if the user selects 'n'
 
 
@@ -210,6 +211,14 @@ Whilst planning the functionality for the contacts book, I had to consider how I
     - google auth - the Google authentication library for Python. Provides the ability, to authenticate to Google APIs and integrate with HTTP libraries
     - Heroku for deployment and to host the Code Institute mock terminal to run the program
 
+
+## Testing
+
+### Fixed Bugs
+    - Messages being printed to terminal more than once
+        - One of the first bugs I discovered and fixed in my testing phase was to do with the search_workbook function. The print out to in the terminal to tell the user that the search was being carried out, and if the contact had been found was being repeated.
+        - After reviewing the code, I found the error inside the search_contact function. I had called upon the display_contact function twice - once to deliberately call upon the function, but I had also originally used the return value from the search_workbook function to define the confirmed_contact function, thus running the function again and causing it to print to the terminal twice.
+        - To fix this, I removed the inital line of code where I called the search_workbook function as it was the confirmed_contact variable that was required
 
 ## Credits
 
