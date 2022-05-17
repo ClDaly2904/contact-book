@@ -77,13 +77,6 @@ exit phonebook()
 - exits contact book system
 - prints thank you message to user
 
-validate_return()
-- takes 1 argument, term
-- checks search term to see if more than one result
-has been returned, and if so, prints them all to the
-terminal
-
-
 """
 
 # importing the python libraries
@@ -388,54 +381,28 @@ def remove_contact():
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
             # if the search term in workbook, find row and delete it
-            if search_workbook(search_term, remove_contact):
-                if validate_return(search_term):
-                    confirmed_contact = contacts.find(search_term)
-                    confirmed_info = contacts.row_values(confirmed_contact.row)
+            confirmed_info = search_workbook(search_term, remove_contact)
 
-                    print(f"Are you sure you want to delete "
-                          f"{confirmed_info[0]} {confirmed_info[1]}"
-                          f"?\n")
-                    delete_contact = input("Please enter 'Y' to delete and 'N'"
-                                           " to return to contact book "
-                                           "menu:\n").lower()
+            print(f"Are you sure you want to delete "
+                  f"{confirmed_info[0]} {confirmed_info[1]}"
+                  f"?\n")
+            delete_contact = input("Please enter 'Y' to delete and 'N'"
+                                   " to return to contact book "
+                                   "menu:\n").lower()
 
-                    if validate_key(delete_contact):
-                        if delete_contact == "y":
-                            contacts.delete_rows(confirmed_contact.row)
-                            # Confirm deletion to the user
-                            print("Contact successfully deleted.\n")
-                            break
-                        elif delete_contact == "n":
-                            print("Contact deletion cancelled.\n")
-                            break
-            else:
-                return False
+            if validate_key(delete_contact):
+                if delete_contact == "y":
+                    contacts.delete_row(confirmed_info[0].row)
+                    # Confirm deletion to the user
+                    print("Contact successfully deleted.\n")
+                    break
+                elif delete_contact == "n":
+                    print("Contact deletion cancelled.\n")
+                    break
 
     # User can choose if they want to remove another contact
     # or return to main contact book menu
     run_again(remove_contact)
-
-
-def search_workbook(term, function):
-    """
-    Searches workbook and returns value if found,
-    otherwise throws warning
-    """
-
-    print(f"Searching contacts list for '{term}'...\n")
-
-    find_contact = contacts.find(term)
-
-    if find_contact:
-        # Confirm to user contact has been found
-        print(f"{term} found!\n")
-        return find_contact
-    else:
-        print(f"Contact '{term}' not found."
-              " Please try again.\n")
-        run_again(function)
-        return False
 
 
 def delete_all():
@@ -535,26 +502,24 @@ def display_contact():
 
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
+
             # if the search term in workbook, find row and display to user
-            if search_workbook(search_term, display_contact):
-                if validate_return(search_term):
-                    print(f"Pulling up full information for '{search_term}'"
-                          "...\n")
+            confirmed_info = search_workbook(search_term, display_contact)
 
-                    # Find row number for contact
-                    confirmed_contact = (contacts.find(search_term)).row
-                    # Get a list of all contact information
-                    confirmed_info = contacts.row_values(confirmed_contact)
+            # Find row number for contact
+            confirmed_contact = (contacts.find(search_term)).row
+            # Get a list of all contact information
 
-                    # Print contact information the terminal for user
-                    print(f"First name: {confirmed_info[0]}")
-                    print(f"Last name: {confirmed_info[1]}")
-                    print(f"Address: {confirmed_info[2]}")
-                    print(f"Phone number: {confirmed_info[3]}")
-                    print(f"Email: {confirmed_info[4]}\n")
-                    break
-                else:
-                    return False
+            print(f"Pulling up full information for '{search_term}'"
+                  "...\n")
+
+            # Print contact information the terminal for user
+            print(f"First name: {confirmed_info[0]}")
+            print(f"Last name: {confirmed_info[1]}")
+            print(f"Address: {confirmed_info[2]}")
+            print(f"Phone number: {confirmed_info[3]}")
+            print(f"Email: {confirmed_info[4]}\n")
+            break
 
     # Return row of chosen contact
     return confirmed_contact
@@ -655,7 +620,7 @@ def update_column(heading, contact, column_no):
     # User to input new data to be updated
 
     # Send new info to relevant validation function for its type
-    if column_no == "1" or "2":
+    if column_no == "1":
         while True:
             new_name = input("Please enter new contact name:\n")
 
@@ -663,12 +628,27 @@ def update_column(heading, contact, column_no):
                 print(update_message)
                 break
 
-        # Find cell in contacts spreadsheet and update it with the
-        # new info given by user
-        contacts.update_cell(contact, column_no, new_name)
+            # Find cell in contacts spreadsheet and update it with the
+            # new info given by user
+            contacts.update_cell(contact, column_no, new_name)
 
-        # Confirm successful operation to user
-        print("Contact information successfully updated!\n")
+            # Confirm successful operation to user
+            print("Contact information successfully updated!\n")
+
+    elif column_no == "2":
+        while True:
+            new_name = input("Please enter new contact name:\n")
+
+            if validate_name(new_name):
+                print(update_message)
+                break
+
+            # Find cell in contacts spreadsheet and update it with the
+            # new info given by user
+            contacts.update_cell(contact, column_no, new_name)
+
+            # Confirm successful operation to user
+            print("Contact information successfully updated!\n")
 
     elif column_no == "3":
         while True:
@@ -678,7 +658,7 @@ def update_column(heading, contact, column_no):
                 print(update_message)
                 break
 
-        contacts.update_cell(contact, column_no, new_address)
+            contacts.update_cell(contact, column_no, new_address)
         print("Contact information successfully updated!\n")
 
     elif column_no == "4":
@@ -690,8 +670,8 @@ def update_column(heading, contact, column_no):
                 break
 
         contacts.update_cell(contact, column_no, new_number)
-
         print("Contact information successfully updated!\n")
+
     elif column_no == "5":
         while True:
             new_email = input("Please enter new email address:\n")
@@ -701,7 +681,6 @@ def update_column(heading, contact, column_no):
                 break
 
         contacts.update_cell(contact, column_no, new_email)
-
         print("Contact information successfully updated!\n")
 
     run_again(update_contact)
@@ -751,45 +730,74 @@ def run_again(function):
                 break
 
 
-def validate_return(term):
+def search_workbook(term, function):
     """
     checks to see how many return results there are
     """
+
+    print(f"Searching contacts list for '{term}'...\n")
 
     list_of_contacts = contacts.findall(term)
     # Get number of contacts matching search term
     no_contacts = len(list_of_contacts)
 
-    if no_contacts == 1:
-        return term
-    elif no_contacts > 1:
-        print("Multiple matches found.")
+    first_names = contacts.col_values(1)
+    last_names = contacts.col_values(2)
+    index = 1
+    rows = []
 
-        first_names = contacts.col_values(1)
-        last_names = contacts.col_values(2)
-        index = 1
-        rows = []
+    if no_contacts == 1:
+
+        print(f"{term} found!\n")
+
+        if term in first_names:
+            for first_name in first_names:
+                if first_name == term:
+                    rows.append(index)
+                index += 1
 
         if term in last_names:
             for last_name in last_names:
                 if last_name == term:
                     rows.append(index)
-                    index += 1
+                index += 1
 
-                first_name = first_names[index]
-                print(f"{first_name} {last_name}")
+        only_contact = rows[0]
+        chosen_contact = contacts.row_values(only_contact)
+        return chosen_contact
+
+    elif no_contacts > 1:
+        print("Multiple matches found!")
+
+        if term in last_names:
+            for last_name in last_names:
+                if last_name == term:
+                    rows.append(index)
+                index += 1
+
         elif term in first_names:
             for first_name in first_names:
                 if first_name == term:
                     rows.append(index)
-                    index += 1
+                index += 1
 
-                last_name = last_names[index]
-                print(f"{first_name} {last_name}")
+        for row in rows:
+            found_contact = (contacts.row_values(row))
 
-        print("Please refine search criteria and try again.")
+            print(f"{row}. {found_contact[0]} {found_contact[1]}")
 
-        main()
+        user_choice = input("Please input the index number of the "
+                            "contact you wish to select:\n")
+
+        row_num = int(user_choice)
+        chosen_contact = contacts.row_values(row_num)
+
+        return chosen_contact
+
+    else:
+        print(f"Contact '{term}' not found."
+              " Please try again.\n")
+        run_again(function)
         return False
 
 
