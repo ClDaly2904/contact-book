@@ -222,16 +222,21 @@ def validate_number(values):
     """
 
     try:
-        num = [int(value) for value in values]
-        # Check to see if length of numbers user has entered is 10,
-        # if not, then checks to see if length is 11
-        if len(num) != 10:
-            if len(num) != 11:
-                # Throws error if user input is not required length
+        for value in values:
+            if not value.isnumeric():
                 raise ValueError(
-                    "Minimum value required is 10, maximum 11. "
-                    f"You provided {len(num)}"
+                    "Number required. "
+                    f"You entered {values}"
                 )
+            # Check to see if length of numbers user has entered is 10,
+            # if not, then checks to see if length is 11
+            elif len(values) != 10:
+                if len(values) != 11:
+                    # Throws error if user input is not required length
+                    raise ValueError(
+                        "Minimum value required is 10, maximum 11. "
+                        f"You entered {len(values)}"
+                    )
     # Throws error if user has not entered a number
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
