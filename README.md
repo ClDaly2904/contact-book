@@ -209,7 +209,8 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - Python libraries
     - gspread - Python API for google sheets. Allows user to open a spreadsheet, read/write/format cell ranges and provides sharing and access control
     - google auth - the Google authentication library for Python. Provides the ability, to authenticate to Google APIs and integrate with HTTP libraries
-    - Heroku for deployment and to host the Code Institute mock terminal to run the program
+    - tabulate to create a table to display all contacts in for display_all function
+- Heroku for deployment and to host the Code Institute mock terminal to run the program
 
 
 ## Testing
@@ -227,6 +228,11 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - Websites such as [Real Python](https://realpython.com/) were a good resource. I used this one for exploring the enumerate function
 - As always, [Stack Overflow](https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z) is a great reference when it comes to troubleshooting and helped me with code such as the validation functions
 - To help me navigate all of the different options available to me using the gspread library, I used the [gspread user guide](https://docs.gspread.org/en/latest/user-guide.html). This documentation was of great help when I was figuring out how to retrieve information from the google sheet
+- To create a table from the data retrieved by the display_all function, I used this article from [Towards Data Science](https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd)
+
+
+
+
 
 
 
