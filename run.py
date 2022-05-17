@@ -403,16 +403,16 @@ def remove_contact():
                         for confirmed_info[0] in first_names:
                             if (((confirmed_info[0]) in first_names) and
                                (confirmed_info[1]) in last_names):
-                                row = index
+                                row = (index - 1)
                             index += 1
                     elif confirmed_info[1] in last_names:
                         for confirmed_info[1] in last_names:
                             if (((confirmed_info[0]) in first_names) and
                                (confirmed_info[1]) in last_names):
-                                row = index
+                                row = (index - 1)
                             index += 1
 
-                    contacts.delete_rows((row - 1))
+                    contacts.delete_rows(row)
 
                     # Confirm deletion to the user
                     print("Contact successfully deleted.\n")
@@ -527,10 +527,6 @@ def display_contact():
             # if the search term in workbook, find row and display to user
             confirmed_info = search_workbook(search_term, display_contact)
 
-            # Find row number for contact
-            confirmed_contact = (contacts.find(search_term)).row
-            # Get a list of all contact information
-
             print(f"Pulling up full information for '{search_term}'"
                   "...\n")
 
@@ -543,7 +539,7 @@ def display_contact():
             break
 
     # Return row of chosen contact
-    return confirmed_contact
+    return confirmed_info
 
 
 def display_all():
@@ -584,7 +580,22 @@ def update_contact():
 
     # User searches for contact they wish to update and contact information
     # is displayed to the terminal
-    contact_to_update = display_contact()
+    confirmed_info = display_contact()
+    first_names = contacts.col_values(1)
+    last_names = contacts.col_values(2)
+    index = 1
+    if confirmed_info[0] in first_names:
+        for confirmed_info[0] in first_names:
+            if (((confirmed_info[0]) in first_names) and
+               (confirmed_info[1]) in last_names):
+                row = (index)
+            index += 1
+    elif confirmed_info[1] in last_names:
+        for confirmed_info[1] in last_names:
+            if (((confirmed_info[0]) in first_names) and
+               (confirmed_info[1]) in last_names):
+                row = (index)
+            index += 1
 
     # Loop repeats until user makes a valid number selection, allow user to
     # select which information type they would like to update
@@ -603,23 +614,23 @@ def update_contact():
 
             if update_choice == "1":
                 update_heading = "first name"
-                update_column(update_heading, contact_to_update, "1")
+                update_column(update_heading, row, "1")
                 break
             elif update_choice == "2":
                 update_heading = "last name"
-                update_column(update_heading, contact_to_update, "2")
+                update_column(update_heading, row, "2")
                 break
             elif update_choice == "3":
                 update_heading = "address"
-                update_column(update_heading, contact_to_update, "3")
+                update_column(update_heading, row, "3")
                 break
             elif update_choice == "4":
                 update_heading = "phone number"
-                update_column(update_heading, contact_to_update, "4")
+                update_column(update_heading, row, "4")
                 break
             elif update_choice == "5":
                 update_heading = "email"
-                update_column(update_heading, contact_to_update, "5")
+                update_column(update_heading, row, "5")
                 break
 
 
@@ -649,12 +660,12 @@ def update_column(heading, contact, column_no):
                 print(update_message)
                 break
 
-            # Find cell in contacts spreadsheet and update it with the
-            # new info given by user
-            contacts.update_cell(contact, column_no, new_name)
+        # Find cell in contacts spreadsheet and update it with the
+        # new info given by user
+        contacts.update_cell(contact, column_no, new_name)
 
-            # Confirm successful operation to user
-            print("Contact information successfully updated!\n")
+        # Confirm successful operation to user
+        print("Contact information successfully updated!\n")
 
     elif column_no == "2":
         while True:
@@ -664,12 +675,12 @@ def update_column(heading, contact, column_no):
                 print(update_message)
                 break
 
-            # Find cell in contacts spreadsheet and update it with the
-            # new info given by user
-            contacts.update_cell(contact, column_no, new_name)
+        # Find cell in contacts spreadsheet and update it with the
+        # new info given by user
+        contacts.update_cell(contact, column_no, new_name)
 
-            # Confirm successful operation to user
-            print("Contact information successfully updated!\n")
+        # Confirm successful operation to user
+        print("Contact information successfully updated!\n")
 
     elif column_no == "3":
         while True:
@@ -679,7 +690,7 @@ def update_column(heading, contact, column_no):
                 print(update_message)
                 break
 
-            contacts.update_cell(contact, column_no, new_address)
+        contacts.update_cell(contact, column_no, new_address)
         print("Contact information successfully updated!\n")
 
     elif column_no == "4":

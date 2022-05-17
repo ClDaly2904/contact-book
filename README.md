@@ -21,6 +21,7 @@
     - [Exit contact book function](#exit-contact-book-function)
     - [Return to menu option](#return-to-menu-option)
     - [Validation for user inputs](#validation-for-user-inputs)
+    - [Search workbook function](#search_workbook_function)
 
 ## About
 
@@ -105,6 +106,8 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - User can review the different functions of the contact book and choose which one(s) they would like to use
 - Numbered so that user can enter the number of the function the wish to use
 
+![Screenshot of main contact book menu](docs-images/contact_menu.png)
+
 
 ### Add contact function
 
@@ -145,7 +148,9 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - Allows the user to delete all of their current contact information
 - If selected from the main contacts menu, the user will have to confirm that they want to delete all contacts using 'y' or 'n'. This helps avoid the user accidentally clearing their contacts spreadsheet
 - Confirms deletion of all contacts in the terminal if user chooses 'y', or cancels deletion and returns user to the menu if the user selects 'n'
+- Displayed in a grid for better user readability using tabulate
 
+![Screenshot of table of contacts printed out to terminal](docs-images/display-all-function.png)
 
 ### Update contact function
 
@@ -168,6 +173,7 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - This improves user experience as means that the user does not need to re-initialise the contact book after they complete a task. It also reduces contact points for those users wishing to repeat a function, and is less visually confusing, when compared to my original idea of automatically bringing up the menu
 - The only function from the main menu that the return to menu option does not appear for is the delete all contacts function as there is no point for the user to repeat this task, so the user is still automatically redirected back to the menu
 
+![Screenshot of terminal asking if user would like to return to menu](docs-images/run_again.png)
 
 ### Validation for user inputs
 
@@ -193,6 +199,16 @@ Whilst planning the functionality for the contacts book, I had to consider how I
     - Must include '@' and '.'
     - Will only accept if alphabet characters present, will not accept if user only enters '@' and '.'
 - If a user input does not meet the validation requirements, an error message will be displayed to the user. This informs the user that there has been an error and improves user experience by telling them what they have done wrong
+
+![Screenshot of validation examples](docs-images/validation.png)
+
+### Search workbook function
+
+- Function to check if search term is in database and if there are any matching contacts
+- If only one user found, that user is returned to the terminal
+- If more than one user found, user can choose which contact they want to choose and continue on with (to be searched/deleted etc) by entering their index number
+
+![Screenshot of multiple contacts being returned from search](docs-images/search_workbook.png)
 
 
 ### Possible future features
