@@ -22,12 +22,30 @@
     - [Return to menu option](#return-to-menu-option)
     - [Validation for user inputs](#validation-for-user-inputs)
     - [Search workbook function](#search_workbook_function)
+    - [Python logic](#python-logic)
+- [Testing](#testing)
+    - [Fixed bugs](#fixed-bugs)
+    - [Validators](#validators)
+- [Deployment](#deployment)
+- [Credits](#credits)
 
 ## About
 
 Contacts book is a Python application connected to a google sheet spreadsheet, which runs in the Code Institute mock terminal on Heroku.
 
 Users can create, access and delete records of their contacts including name, address, number and email.
+
+A link to the [live site](https://contact-book1805.herokuapp.com/) can be found here.
+
+![Am I responsive screenshot](docs-images/am-i-responsive.png)
+
+The contact data is stored on googlesheets:
+
+![Screenshot of the contact book in google sheets](docs-images/spreadsheet.png)
+
+And the live site uses the Code Institute mock terminal on Heroku. The deployment terminal is set to 80 columns by 24 rows:
+
+![Screenshot of mock terminal](docs-images/mock-terminal.png)
 
 ## User Experience
 
@@ -211,6 +229,15 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 ![Screenshot of multiple contacts being returned from search](docs-images/search_workbook.png)
 
 
+## Python Logic
+
+Once I had considered the needs of the user and the different functionalities I might need, I had to figure out how these would interact and work together to flow into an application.
+
+I used [Lucidchart](https://www.lucidchart.com/pages/) to create a flowchart where I could plan out the python logic.
+
+![Screenshot of lucidchart flowchart](docs-images/python-logic.png)
+
+
 ### Possible future features
 
 - Add a 'Favourites' List for user to add all their most used contacts
@@ -258,46 +285,31 @@ As the contact book was becoming more whole, I could begin testing functionaliti
 
 ## Validators
 
-To check that my python file had no syntax errors, I ran it through both the [PEP8](http://pep8online.com/checkresult) Python Validator and the [Extends Class](https://extendsclass.com/python-tester.html) Python Code Checker.
+To check that my python file had no syntax errors, I ran it through both the [PEP8](http://pep8online.com/) Python Validator and the [Extends Class](https://extendsclass.com/python-tester.html) Python Code Checker.
+
+![Screenshot of PEP8 validator](docs-images/pep8-validator.png)
+
+![Screenshot of Extends class validator](docs-images/extends-class-validator.png)
+
+
+## Deployment
+
+This project was deployed using the Code Institute mock terminal on Heroku.
+
+1. First you will need to fork or clone this repository
+2. You will then need to create a new Heroku app
+3. When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+    1. `heroku/python`
+    2. `heroku/nodejs`
+    You must then create a _Config Var_ called `PORT`. Set this to `8000`. If you have credentials you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+4. Link the Heroku app to the repository.
 
 
 ## Credits
 
 - To help form the basis for the different functions I would need for this project, I used this article from [Geeks for Geeks](https://www.geeksforgeeks.org/implementing-a-contacts-directory-in-python/) as a shell, then build my own custom code using different technologies. I also used this as a basis for my main contacts menu
-- I took inspiration from the [Code Institute's](https://codeinstitute.net/) Love Sandwiches Project. In particular, I followed the videos to help with setting up APIs and credentials
+- I took inspiration from the [Code Institute's](https://codeinstitute.net/) Love Sandwiches Project. In particular, I followed the videos to help with setting up APIs and credentials. Also for the use of the mock terminal
 - Websites such as [Real Python](https://realpython.com/) were a good resource. I used this one for exploring the enumerate function
 - As always, [Stack Overflow](https://stackoverflow.com/questions/36432954/python-validation-to-ensure-input-only-contains-characters-a-z) is a great reference when it comes to troubleshooting and helped me with code such as the validation functions
 - To help me navigate all of the different options available to me using the gspread library, I used the [gspread user guide](https://docs.gspread.org/en/latest/user-guide.html). This documentation was of great help when I was figuring out how to retrieve information from the google sheet
 - To create a table from the data retrieved by the display_all function, I used this article from [Towards Data Science](https://towardsdatascience.com/how-to-easily-create-tables-in-python-2eaea447d8fd)
-
-
-
-
-
-
-
-## Reminders
-
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
-
-## Creating the Heroku app
-
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
-
-1. `heroku/python`
-2. `heroku/nodejs`
-
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
-
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
-
-Connect your GitHub repository and deploy as normal.
-
-## Constraints
-
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
-
------
-Happy coding!
