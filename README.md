@@ -160,6 +160,7 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - Useful for the user to review all of the contact information they hold
 - Prints the information for all contacts to the terminal as a list of dictionaries
 
+![Screenshot of table of contacts printed out to terminal](docs-images/display-all-function.png)
 
 ### Delete all contacts function
 
@@ -168,7 +169,6 @@ Whilst planning the functionality for the contacts book, I had to consider how I
 - Confirms deletion of all contacts in the terminal if user chooses 'y', or cancels deletion and returns user to the menu if the user selects 'n'
 - Displayed in a grid for better user readability using tabulate
 
-![Screenshot of table of contacts printed out to terminal](docs-images/display-all-function.png)
 
 ### Update contact function
 
@@ -296,13 +296,14 @@ To check that my python file had no syntax errors, I ran it through both the [PE
 
 This project was deployed using the Code Institute mock terminal on Heroku.
 
-1. First you will need to fork or clone this repository
-2. You will then need to create a new Heroku app
-3. When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
-    1. `heroku/python`
-    2. `heroku/nodejs`
-    You must then create a _Config Var_ called `PORT`. Set this to `8000`. If you have credentials you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+1. First you will need to fork or clone this repository from Github
+2. You will then need to create a new Heroku app from the Heroku site
+3. When you create the app, you will need to add two buildpacks from the Settings tab. The ordering is as follows:
+    1. 'heroku/python'
+    2. 'heroku/nodejs'
+    You must then create a Config Var called 'PORT'. Set this to '8000'. If you have credentials you must create another Config Var called 'CREDS' and paste the JSON into the value field so that the deployed version has access to files it needs to run.
 4. Link the Heroku app to the repository.
+5. To deploy any code changes to Heroku, use the 'git push heroku main' command
 
 
 ## Credits
