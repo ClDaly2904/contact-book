@@ -105,7 +105,8 @@ data = contacts.get_all_values()
 def contacts_menu():
     """
     Menu to initialize when program first runs. User can view all
-    the different contact options and make a selection.
+    the different contact options and make a selection, which is
+    sent to the validate choice function
     """
 
     print("****************************************"
@@ -143,10 +144,13 @@ def validate_choice(values, no_of_choices):
             raise ValueError(
                  f"Select 1 option from the list. You provided {len(num)}\n"
             )
+        # throws error if user has input a number bigger than the
+        # number of choices
         if int(values) > no_of_choices:
             raise ValueError(
                 f"{num} is not a valid option from the list"
             )
+        # raises an error if user enters 0
         if values == "0":
             raise ValueError(
                 f"{num} is not a valid option from the list"
@@ -166,6 +170,7 @@ def direct_user(choice):
     function and direct user to correct function
     """
 
+    # call upon a function based upon user input
     if choice == "1":
         add_contact()
     elif choice == "2":
@@ -186,6 +191,8 @@ def add_contact():
     """
     Takes user input to create new contact information for name,
     address, phone number and email address.
+    Runs each data type through the relevant validation function
+    before adding information to worksheet
     """
     new_contact = []
 
@@ -248,7 +255,9 @@ def add_contact():
 def validate_name(name):
     """
     Checks user input to make sure that user has
-    not used any numbers or special characters
+    not used any numbers or disallowed special characters.
+    Checks user has entered alpha characters.
+    Takes name as argument to be tested.
     """
 
     # Adding valid characters variable for validation rather than using
@@ -256,13 +265,16 @@ def validate_name(name):
     valid_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -'
     alpha_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+    # if user enters character not in allowed characters, return false
     if not all(char in valid_characters for char in name):
         print("Invalid data. Allowed characters are alphabet, hyphen or space."
               "\n")
         return False
+    # if user has not entered at least two characters, return false
     elif len(name) < 2:
         print("Invalid data. Minimum value 2 characters. \n")
         return False
+    # if user has not entered at least one alpha character, return false
     elif not any(char in alpha_characters for char in name):
         print("Invalid data: Name must contain alphabet.")
         print("Cannot contain just blank space or hyphen.\n")
@@ -282,14 +294,17 @@ def validate_address(address):
     invalid_characters = "?!/+_=()*^%$£@#~"
     alpha_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+    # check only allowed characters used
     if any(char in invalid_characters for char in address):
         print("Invalid data: Special characters not allowed for address."
               " Please try again.\n")
         return False
+    # check address is at least 10 characters
     elif len(address) < 10:
         print("Invalid data: Minimum value 10 characters."
               f" You entered {len(address)}, please try again. \n")
         return False
+    # check address has at least one alpha character
     elif not any(char in alpha_characters for char in address):
         print("Invalid data: Name must contain alphabet.")
         print("Cannot contain just blank space or hyphen.\n")
@@ -307,6 +322,7 @@ def validate_number(values):
 
     try:
         for value in values:
+            # check is value is a number
             if not value.isnumeric():
                 raise ValueError(
                     "Number required. "
@@ -338,6 +354,7 @@ def validate_email(email):
     alpha_characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
     try:
+        # raise error if required characters not in input
         if "@" not in email:
             raise ValueError(
                 "Missing '@'. Email address requires '@' and '.'"
@@ -346,11 +363,13 @@ def validate_email(email):
             raise ValueError(
                 "Missing '.'. Email address requires '@' and '.'"
             )
+        # raise error if input is not at least 10 characters
         elif len(email) < 10:
             raise ValueError(
                 f"Minimum value 10 characters. "
                 f"You entered {len(email)}"
             )
+        # raise error if no alphabet characters in email
         elif not any(char in alpha_characters for char in email):
             raise ValueError(
                 "Name must contain alphabet."
@@ -383,19 +402,21 @@ def remove_contact():
 
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
-            # if the search term in workbook, find row and delete it
+            # check if term is in workbook
             confirmed_info = search_workbook(search_term, remove_contact)
 
+            # confirm user to be deleted
             print(f"Are you sure you want to delete "
                   f"{confirmed_info[0]} {confirmed_info[1]}"
                   f"?\n")
             delete_contact = input("Please enter 'Y' to delete and 'N'"
                                    " to return to contact book "
                                    "menu:\n").lower()
-
+            # check user has input a valid key
             if validate_key(delete_contact):
+                # delete contact if user chooses yes
                 if delete_contact == "y":
-
+                    # find row number
                     first_names = contacts.col_values(1)
                     last_names = contacts.col_values(2)
                     index = 1
@@ -411,12 +432,13 @@ def remove_contact():
                                (confirmed_info[1]) in last_names):
                                 row = (index - 1)
                             index += 1
-
+                    # delete row
                     contacts.delete_rows(row)
 
                     # Confirm deletion to the user
                     print("Contact successfully deleted.\n")
                     break
+                # return user to menu if they choose no
                 elif delete_contact == "n":
                     print("Contact deletion cancelled.\n")
                     break
@@ -504,6 +526,7 @@ def search_contact():
     # Confirm to user which function they have selected
     print("You have selected to search for a contact.\n")
 
+    # display contact data
     display_contact()
 
     run_again(search_contact)
@@ -524,7 +547,7 @@ def display_contact():
         # Pass search term to name validator before searching workbook
         if validate_name(search_term):
 
-            # if the search term in workbook, find row and display to user
+            # if the search term in workbook, retrieve row values
             confirmed_info = search_workbook(search_term, display_contact)
 
             print(f"Pulling up full information for '{search_term}'"
@@ -581,6 +604,8 @@ def update_contact():
     # User searches for contact they wish to update and contact information
     # is displayed to the terminal
     confirmed_info = display_contact()
+
+    # confirm contact row
     first_names = contacts.col_values(1)
     last_names = contacts.col_values(2)
     index = 1
@@ -612,44 +637,31 @@ def update_contact():
 
         if validate_choice(update_choice, 5):
 
+            # pass column no and row no to update_column function
             if update_choice == "1":
-                update_heading = "first name"
-                update_column(update_heading, row, "1")
+                update_column(row, "1")
                 break
             elif update_choice == "2":
-                update_heading = "last name"
-                update_column(update_heading, row, "2")
+                update_column(row, "2")
                 break
             elif update_choice == "3":
-                update_heading = "address"
-                update_column(update_heading, row, "3")
+                update_column(row, "3")
                 break
             elif update_choice == "4":
-                update_heading = "phone number"
-                update_column(update_heading, row, "4")
+                update_column(row, "4")
                 break
             elif update_choice == "5":
-                update_heading = "email"
-                update_column(update_heading, row, "5")
+                update_column(row, "5")
                 break
 
 
-def update_column(heading, contact, column_no):
+def update_column(contact, column_no):
     """
     Receive information for contact and which column should be updated and
     updates with user input.
     """
 
-    # Retrieve values from row for fstring
-    contact_val = contacts.row_values(contact)
-
     update_message = "Updating contact information now...\n"
-
-    # Confirm contact and information type to be updated to user
-    print(f"You have chosen to update the {heading} information"
-          f" for {contact_val[0]} {contact_val[1]}\n")
-
-    # User to input new data to be updated
 
     # Send new info to relevant validation function for its type
     if column_no == "1":
@@ -729,7 +741,7 @@ def exit_phonebook():
     print("Thank you for using your contact book!")
     print("****************************************"
           "***************************************")
-
+    # exit system
     SystemExit()
 
 
@@ -778,6 +790,7 @@ def search_workbook(term, function):
     index = 1
     rows = []
 
+    # code to be executed if only one matching contact
     if no_contacts == 1:
 
         print(f"{term} found!\n")
@@ -798,6 +811,7 @@ def search_workbook(term, function):
         chosen_contact = contacts.row_values(only_contact)
         return chosen_contact
 
+    # code to be exectuted if more than one contact found
     elif no_contacts > 1:
         print("Multiple matches found!")
 
@@ -816,6 +830,7 @@ def search_workbook(term, function):
         for row in rows:
             found_contact = (contacts.row_values(row))
 
+            # print row numbers which user can use to select contact
             print(f"{row}. {found_contact[0]} {found_contact[1]}")
 
         user_choice = input("Please input the index number of the "
@@ -826,9 +841,11 @@ def search_workbook(term, function):
 
         return chosen_contact
 
+    # give error message if user not found
     else:
         print(f"Contact '{term}' not found."
               " Please try again.\n")
+        # ask user if they want to run again
         run_again(function)
         return False
 
